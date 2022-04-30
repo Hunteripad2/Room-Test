@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
-    [HideInInspector] private CharacterController controller;
     [HideInInspector] public Vector3 velocity;
+    [HideInInspector] private float inputX;
+    [HideInInspector] private float inputY;
     [HideInInspector] private enum AnimationState { idle, backward, forward, left, right, backwardRight, backwardLeft, forwardRight, forwardLeft }
     [HideInInspector] private AnimationState animationState;
+    [HideInInspector] public NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>();
+    [HideInInspector] private PlayerMovement localPlayer;
 
     [Header("Movement")]
+    [SerializeField] private Vector3 initialPosition = new Vector3(-0.5f, 0.3f, -3f);
+    [SerializeField] private CharacterController characterController;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float gravityForce = -9.81f;
     [SerializeField] public float defaultVelocityY = -1f;
@@ -22,70 +28,101 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
+        localPlayer = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().GetComponent<PlayerMovement>();
+        Position.Value = initialPosition;
     }
 
     private void Update()
     {
-        HandleMovement();
+        if (this == localPlayer)
+        {
+            HandleMovement();
+            HandleAnimation();
+        }
+        else
+        {
+            transform.position = Position.Value;
+        }
     }
 
     private void FixedUpdate()
     {
-        HandleVelocity();
+        if (this == localPlayer)
+        {
+            HandleVelocity();
+
+            if (NetworkManager.Singleton.IsServer)
+            {
+                Position.Value = transform.position;
+            }
+            else
+            {
+                SubmitPositionRequestServerRpc();
+            }
+        }
     }
 
     private void HandleMovement()
     {
-        float dirX = Input.GetAxis("Horizontal");
-        float dirY = Input.GetAxis("Vertical");
+        inputX = Input.GetAxis("Horizontal");
+        inputY = Input.GetAxis("Vertical");
 
-        Vector3 direction = transform.right * dirX + transform.forward * dirY;
+        Vector3 direction = transform.right * inputX + transform.forward * inputY;
 
-        controller.Move(direction * speed * Time.deltaTime);
+        characterController.Move(direction * speed * Time.deltaTime);
+    }
 
-        if (controller.velocity == Vector3.zero)
+    [ServerRpc]
+    void SubmitPositionRequestServerRpc(ServerRpcParams rpcParams = default)
+    {
+        Position.Value = transform.position;
+    }
+
+    private void HandleAnimation()
+    {
+        if (characterController.velocity == Vector3.zero)
         {
             animator.SetInteger("state", (int)AnimationState.idle);
         }
         else
         {
-            UpdateAnimation(dirX, dirY);
+            UpdateAnimation();
         }
     }
 
-    private void UpdateAnimation(float dirX, float dirY)
+    private void UpdateAnimation()
     {
-        if (dirX > 0f && dirY > 0)
+        if (inputX > 0f && inputY > 0)
         {
             animator.SetInteger("state", (int)AnimationState.backward);
         }
-        else if (dirX > 0f && dirY == 0)
+        else if (inputX > 0f && inputY == 0)
         {
             animator.SetInteger("state", (int)AnimationState.left);
         }
-        else if (dirX > 0f && dirY < 0)
+        else if (inputX > 0f && inputY < 0)
         {
             animator.SetInteger("state", (int)AnimationState.forward);
         }
-        else if (dirX == 0f && dirY > 0)
+        else if (inputX == 0f && inputY > 0)
         {
             animator.SetInteger("state", (int)AnimationState.backward);
         }
-        else if (dirX == 0f && dirY < 0)
+        else if (inputX == 0f && inputY < 0)
         {
             animator.SetInteger("state", (int)AnimationState.forward);
         }
-        else if (dirX < 0f && dirY > 0)
+        else if (inputX < 0f && inputY > 0)
         {
             animator.SetInteger("state", (int)AnimationState.backward);
         }
-        else if (dirX < 0f && dirY == 0)
+        else if (inputX < 0f && inputY == 0)
         {
             animator.SetInteger("state", (int)AnimationState.right);
         }
         else
         {
+            animator.SetInteger("state", (int)AnimationState.forward);
         }
     }
 
@@ -100,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
             velocity.y += gravityForce * Time.deltaTime;
         }
 
-        controller.Move(velocity * Time.deltaTime);
+        characterController.Move(velocity * Time.deltaTime);
     }
 
     private bool IsOnGround()

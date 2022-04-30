@@ -8,7 +8,7 @@ public class ClothesToggle : MonoBehaviour
     [HideInInspector] private Toggle toggle;
 
     [Header("Clothes")]
-    [SerializeField] private GameObject ClothedModel;
+    [SerializeField] private GameObject clothedModel;
     [SerializeField] private GameObject nakedModel;
 
     private void Start()
@@ -23,7 +23,7 @@ public class ClothesToggle : MonoBehaviour
 
     private void ChangeClothingState()
     {
-        ClothedModel.SetActive(toggle.isOn);
+        clothedModel.SetActive(toggle.isOn);
         nakedModel.SetActive(!toggle.isOn);
     }
 }

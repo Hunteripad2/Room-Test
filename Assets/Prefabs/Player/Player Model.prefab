@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203470457943290}
-  - component: {fileID: 95319963403342656}
-  - component: {fileID: 2718010072310000700}
   m_Layer: 0
   m_Name: Player Model
   m_TagString: Untagged
@@ -30,8 +28,8 @@ Transform:
   m_LocalScale: {x: 2.25, y: 2.25, z: 2.25}
   m_Children:
   - {fileID: 4191353904921438}
-  - {fileID: 4035716376342418}
   - {fileID: 4582428939865728}
+  - {fileID: 4035716376342418}
   - {fileID: 4263194749552796}
   - {fileID: 4883341357160262}
   - {fileID: 4725015003219082}
@@ -43,38 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95319963403342656
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003328744321094}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ebaf91e845e67ac4f85b03ca6c72bd32, type: 3}
-  m_Controller: {fileID: 9100000, guid: 90551d12333151a479de3e2cf74c19e2, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2718010072310000700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003328744321094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Animator: {fileID: 95319963403342656}
 --- !u!1 &1005000906851408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,8 +1070,8 @@ GameObject:
   - component: {fileID: 4549863677018192}
   - component: {fileID: 137426824563669510}
   m_Layer: 0
-  m_Name: nacked_boots
-  m_TagString: Untagged
+  m_Name: Naked Boots
+  m_TagString: NakedBoots
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1402,8 +1368,8 @@ GameObject:
   - component: {fileID: 4191353904921438}
   - component: {fileID: 137814948305314248}
   m_Layer: 0
-  m_Name: clothingSet_04_body
-  m_TagString: Untagged
+  m_Name: Clothed Shirt
+  m_TagString: ClothedShirt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1678,8 +1644,8 @@ GameObject:
   - component: {fileID: 4542997393183860}
   - component: {fileID: 137935459797241270}
   m_Layer: 0
-  m_Name: nacked_pants
-  m_TagString: Untagged
+  m_Name: Naked Pants
+  m_TagString: NakedPants
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2198,8 +2164,8 @@ GameObject:
   - component: {fileID: 4582428939865728}
   - component: {fileID: 137736063574695040}
   m_Layer: 0
-  m_Name: clothingSet_04_pants
-  m_TagString: Untagged
+  m_Name: Clothed Pants
+  m_TagString: ClothedPants
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2212,11 +2178,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714825062508984}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4203470457943290}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &137736063574695040
 SkinnedMeshRenderer:
@@ -2659,8 +2625,8 @@ GameObject:
   - component: {fileID: 4932696857576562}
   - component: {fileID: 137881791255630346}
   m_Layer: 0
-  m_Name: nacked_body
-  m_TagString: Untagged
+  m_Name: Naked Shirt
+  m_TagString: NakedShirt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2818,8 +2784,8 @@ GameObject:
   - component: {fileID: 4035716376342418}
   - component: {fileID: 137706915639498454}
   m_Layer: 0
-  m_Name: clothingSet_04_boots
-  m_TagString: Untagged
+  m_Name: Clothed Boots
+  m_TagString: ClothedBoots
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2836,7 +2802,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4203470457943290}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &137706915639498454
 SkinnedMeshRenderer:

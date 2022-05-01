@@ -30,6 +30,11 @@ public class PlayerMovement : NetworkBehaviour
     {
         localPlayer = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().GetComponent<PlayerMovement>();
         Position.Value = initialPosition;
+
+        foreach (Transform child in GameObject.FindGameObjectWithTag("Toggles").transform)
+        {
+            child.gameObject.SetActive(true);
+        }
     }
 
     private void Update()
@@ -57,7 +62,7 @@ public class PlayerMovement : NetworkBehaviour
             }
             else
             {
-                SubmitPositionRequestServerRpc();
+                SubmitPositionRequestServerRpc(transform.position);
             }
         }
     }
@@ -73,9 +78,9 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     [ServerRpc]
-    void SubmitPositionRequestServerRpc(ServerRpcParams rpcParams = default)
+    void SubmitPositionRequestServerRpc(Vector3 pos, ServerRpcParams rpcParams = default)
     {
-        Position.Value = transform.position;
+        Position.Value = pos;
     }
 
     private void HandleAnimation()
@@ -94,7 +99,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (inputX > 0f && inputY > 0)
         {
-            animator.SetInteger("state", (int)AnimationState.backward);
+            animator.SetInteger("state", (int)AnimationState.right);
         }
         else if (inputX > 0f && inputY == 0)
         {
@@ -102,7 +107,7 @@ public class PlayerMovement : NetworkBehaviour
         }
         else if (inputX > 0f && inputY < 0)
         {
-            animator.SetInteger("state", (int)AnimationState.forward);
+            animator.SetInteger("state", (int)AnimationState.left);
         }
         else if (inputX == 0f && inputY > 0)
         {
@@ -114,7 +119,7 @@ public class PlayerMovement : NetworkBehaviour
         }
         else if (inputX < 0f && inputY > 0)
         {
-            animator.SetInteger("state", (int)AnimationState.backward);
+            animator.SetInteger("state", (int)AnimationState.left);
         }
         else if (inputX < 0f && inputY == 0)
         {
@@ -122,7 +127,7 @@ public class PlayerMovement : NetworkBehaviour
         }
         else
         {
-            animator.SetInteger("state", (int)AnimationState.forward);
+            animator.SetInteger("state", (int)AnimationState.right);
         }
     }
 

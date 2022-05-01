@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ClothedShirt
+  - ClothedPants
+  - ClothedBoots
+  - NakedShirt
+  - NakedPants
+  - NakedBoots
+  - Toggles
   layers:
   - Default
   - TransparentFX
